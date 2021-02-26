@@ -1,18 +1,39 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button';
+import {db} from './Fire'
+import firebase from 'firebase'
 
 function Chatinput({channelName, channelId}) {
-
+    const [input, setInput] = useState('')
     const sendMessage=e=> {
         e.preventDefault(); // form when submit will trigger refresh without preventDefault
+        if (!channelId){
+            return false;
+        }
 
+        db
+            .collection('rooms')
+            .doc(channelId)
+            .collection('messages')
+            .add({
+                message: input,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                displayName: 'KresnoFatih',
+                photoURL: 'https://i.pinimg.com/474x/34/30/a0/3430a061b7435ef0c58b1eff94453556.jpg'
+            })
+        
+        setInput('');
     }
 
     return (
         <ChatinputContainer>
             <form>
-                <input placeholder={'Message #ROOM'}/>
+                <input 
+                    value={input} 
+                    placeholder={`Message #${channelName}`}
+                    onChange={(e)=>setInput(e.target.value)}
+                />
                 <Button hidden type='submit' onClick={sendMessage}>
                     SEND
                 </Button>
