@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const appSlice = createSlice({
   name: 'app',
   initialState: {
-    roomId: null,
+    roomId: 1,
   },
   reducers: {
     enterRoom: (state, action) => {
