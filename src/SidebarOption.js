@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
+import {useDispatch} from 'react-redux'
 import {db} from './Fire'
+import { enterRoom } from './features/appSlice';
 
 function SidebarOption({Icon, title, addChannelOption, id}) {
     const addChannel = ()=>{
@@ -12,8 +14,13 @@ function SidebarOption({Icon, title, addChannelOption, id}) {
         }
     }
     
+    const dispatch = useDispatch();
     const selectChannel = ()=>{
-        //
+        if(id){
+            dispatch(enterRoom({
+                roomId: id
+            }))
+        }
     }
     return (
         <SidebarOptionContainer
