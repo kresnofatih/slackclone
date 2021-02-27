@@ -7,12 +7,13 @@ import { selectRoomId } from './features/appSlice';
 import Chatinput from './Chatinput';
 import {useCollection, useDocument} from 'react-firebase-hooks/firestore'
 import { db } from './Fire';
+import Message from './Message';
 
 function Chat() {
     const roomId = useSelector(selectRoomId);
     const [roomDetails] = useDocument(
-        roomId && db.collection('rooms').doc(roomId)
-    )
+        roomId && db.collection("rooms").doc(roomId)
+    );
     const [roomMessages] = useCollection(
         roomId && db
                     .collection('rooms')
@@ -36,6 +37,18 @@ function Chat() {
 
             <ChatMessages>
                 {/* list all msgs */}
+                {roomMessages?.docs.map(doc=>{
+                    const {message, timestamp, displayName, photoURL} = doc.data();
+                    return (
+                        <Message
+                            key={doc.id}
+                            message={message}
+                            timestamp={timestamp}
+                            displayName={displayName}
+                            photoURL={photoURL}
+                        />
+                    )
+                })}
             </ChatMessages>
 
             <Chatinput
