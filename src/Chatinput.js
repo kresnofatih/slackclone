@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button';
-import {db} from './Fire'
+import {auth, db} from './Fire'
 import firebase from 'firebase'
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-function Chatinput({channelName, channelId}) {
+function Chatinput({channelName, channelId, chatRef}) {
+    const [user] = useAuthState(auth)
     const [input, setInput] = useState('')
     const sendMessage=e=> {
         e.preventDefault(); // form when submit will trigger refresh without preventDefault
@@ -19,8 +21,12 @@ function Chatinput({channelName, channelId}) {
             .add({
                 message: input,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                displayName: 'KresnoFatih',
-                photoURL: 'https://i.pinimg.com/474x/34/30/a0/3430a061b7435ef0c58b1eff94453556.jpg'
+                displayName: user.displayName,
+                photoURL: user.photoURL
+            });
+        
+            chatRef.current.scrollIntoView({
+                behaviour: "smooth"
             })
         
         setInput('');

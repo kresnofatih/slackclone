@@ -14,9 +14,11 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import {useCollection} from 'react-firebase-hooks/firestore'
-import {db} from './Fire'
+import {auth, db} from './Fire'
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Sidebar() {
+    const [user] = useAuthState(auth)
     const [channels, loading, error] = useCollection(db.collection('rooms'));
     return (
         <SidebarContainer>
@@ -25,7 +27,7 @@ function Sidebar() {
                     <h2>RUAK FAM HQ</h2>
                     <h3>
                         <FiberManualRecordIcon/>
-                        Kresno Fatih
+                        {user?.displayName}
                     </h3>
                 </SidebarInfo>
                 <CreateIcon/>

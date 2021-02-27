@@ -21,7 +21,7 @@ export default Message
 const MessageContainer = styled.div`
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 20px;
 
     > img {
         height: 50px;
