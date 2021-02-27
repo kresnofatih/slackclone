@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import React from 'react'
 import styled from 'styled-components'
 import { auth, provider } from './Fire';
+import {Helmet} from 'react-helmet';
 
 function Login() {
     const login = e => {
@@ -12,6 +13,9 @@ function Login() {
     }
     return (
         <LoginContainer>
+            <Helmet>
+                <title>Slack Clone</title>
+            </Helmet>
             <LoginInnerContainer>
                 <img 
                     src="https://cdn.brandfolder.io/5H442O3W/as/pl546j-7le8zk-199wkt/Slack_Mark.svg" 
